@@ -1,4 +1,11 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 
-@Controller('-tag')
-export class TagController {}
+@Controller('tag')
+// @ApiTags('tag')
+export class TagController {
+  constructor() { }
+  @Get('/tags')
+  getAll() {
+    return ['title', 'experience'];
+  }
+}
