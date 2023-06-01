@@ -1,7 +1,7 @@
-import { Tag } from '@app/entities';
+import { Tag } from './../entities';
 import { ConfigService } from '@nestjs/config';
 
-export const PostgresInstanceConfig = (): any => {
+export const PostgresInstanceConfig = () => {
   const configService = new ConfigService();
   return {
     type: 'postgres',

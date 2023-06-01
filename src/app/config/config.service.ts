@@ -13,4 +13,3 @@ export class TypeOrmConfigServiceForPostgres implements TypeOrmOptionsFactory {
     };
   }
 }
-// console.log(PostgresInstanceConfig())
