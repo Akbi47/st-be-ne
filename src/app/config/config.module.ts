@@ -4,17 +4,23 @@ import {
   ConfigService as NestConfigService,
 } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TypeOrmConfigService } from './postgresdb.config.service';
+import { TypeOrmConfigServiceForPostgres } from './config.service';
 import { AppConfigService } from './app.config.service';
+
 @Global()
 @Module({
   imports: [
     NestConfigModule.forRoot({
       isGlobal: true,
     }),
+    TypeOrmModule.forRootAsync({
+      imports: [NestConfigModule],
+      useClass: TypeOrmConfigServiceForPostgres,
+      inject: [NestConfigService],
+    }),
     // TypeOrmModule.forRootAsync({
     //   imports: [NestConfigModule],
-    //   useClass: TypeOrmConfigService,
+    //   useClass: TypeOrmConfigServiceForPostgres2,
     //   inject: [NestConfigService],
     // }),
   ],
