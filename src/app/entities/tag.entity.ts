@@ -7,7 +7,7 @@ export class Tag {
   @ApiProperty({
     description: 'The unique identifier of the tag',
   })
-  id: string;
+  id?: string;
 
   @Column({
     type: 'varchar'
