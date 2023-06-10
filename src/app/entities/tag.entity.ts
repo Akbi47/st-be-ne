@@ -13,8 +13,8 @@ export class Tag {
     type: 'varchar'
   })
   @ApiProperty({
-    description: 'name',
+    description: 'name of the tag',
     example: 'product',
   })
-  name: string;
+  name?: string;
 }

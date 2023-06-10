@@ -1,11 +1,8 @@
-import { Tag } from './../entities';
+import { User, Tag } from './../entities';
 import { ConfigService } from '@nestjs/config';
 
 export const PostgresInstanceConfig = (): any => {
   const configService = new ConfigService();
-  // console.log('tét2', configService)
-  console.log('tét', configService.get<string>('DB_USERNAME'))
-  // console.log('tét2', configService)
   return {
     type: 'postgres',
     host: configService.get<string>('DB_HOST'),
@@ -14,7 +11,7 @@ export const PostgresInstanceConfig = (): any => {
     password: configService.get<string>('DB_PASSWORD'),
     database: configService.get<string>('DB_NAME'),
     // running migration
-    entities: [Tag], // production environment
+    entities: [Tag, User], // production environment
     synchronize: false, // production environment
     // auto synchronize
     // entities: [__curdirname + '/dist/**/index.js'], // dev environment

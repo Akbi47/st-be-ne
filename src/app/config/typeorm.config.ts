@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm';
 import { config } from 'dotenv';
-import { Tag } from './../entities';
+import { Tag, User } from './../entities';
 
 config();
 
@@ -11,7 +11,7 @@ export const AppDataSource = new DataSource({
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  entities: [Tag],
+  entities: [Tag, User],
   migrations: ['dist/migrations/*.js'],
   migrationsRun: true,
 });
