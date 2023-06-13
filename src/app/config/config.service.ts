@@ -5,7 +5,6 @@ import { PostgresInstanceConfig } from './database.config';
 export class TypeOrmConfigServiceForPostgres implements TypeOrmOptionsFactory {
   constructor() { }
   createTypeOrmOptions(): TypeOrmModuleOptions {
-    // console.log(PostgresInstanceConfig())
     return {
       ...PostgresInstanceConfig(),
     };

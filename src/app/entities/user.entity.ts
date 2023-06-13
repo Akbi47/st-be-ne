@@ -21,6 +21,15 @@ export class User {
   @Expose({ name: 'email' })
   email: string;
 
+  @Column({ name: 'username' })
+  @IsString()
+  @ApiProperty({
+    description: 'email of user',
+    example: 'user1@gmail.com',
+  })
+  @Expose({ name: 'username' })
+  username: string;
+
   @Column({ name: 'password' })
   @IsString()
   @MinLength(8)
@@ -44,7 +53,7 @@ export class User {
     example: 'i am graceful',
   })
   @Expose({ name: 'bio' })
-  bio: string;
+  bio?: string;
 
   @Column({ name: 'avatar_image', default: '', nullable: true })
   @IsString()
@@ -52,12 +61,11 @@ export class User {
     description: 'avatar image of user',
   })
   @Expose({ name: 'avatar_image' })
-  avatarImage: string;
+  avatarImage?: string;
 
   @BeforeInsert()
   async setPassword(): Promise<void> {
     const saltRounds = 10;
     this.password = await hash(this.password, saltRounds);
-    
   }
 }

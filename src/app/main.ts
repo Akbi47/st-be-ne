@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { AppConfigService } from './config/app.config.service';
 import { Logger, VersioningType } from '@nestjs/common';
-import { registerSwagger } from '@libs/infrastructure';
+import { GlobalValidationPipe, registerSwagger } from '@libs/infrastructure';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -24,6 +24,7 @@ async function bootstrap() {
     origin: allowedOrigins,
     credentials: true,
   });
+  app.useGlobalPipes(GlobalValidationPipe);
   if (enableApiDoc) {
     registerSwagger(app, { appName, appVer, apiPrefix: `/${apiDocPrefix}` });
   }
