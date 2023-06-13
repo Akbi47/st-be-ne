@@ -53,7 +53,7 @@ export class User {
     example: 'i am graceful',
   })
   @Expose({ name: 'bio' })
-  bio?: string;
+  bio: string;
 
   @Column({ name: 'avatar_image', default: '', nullable: true })
   @IsString()
@@ -61,7 +61,7 @@ export class User {
     description: 'avatar image of user',
   })
   @Expose({ name: 'avatar_image' })
-  avatarImage?: string;
+  avatarImage: string;
 
   @BeforeInsert()
   async setPassword(): Promise<void> {

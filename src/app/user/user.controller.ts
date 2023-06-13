@@ -8,15 +8,19 @@ import { User } from '@app/entities';
 @Controller('user')
 @ApiTags('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
-  @Post('user')
+  constructor(private readonly userService: UserService) { }
+  @Post('create')
   async createUser(
     @Body() request?: CreateUserDto,
-  ): Promise<UserResponseInterface> {
+    ): Promise<UserResponseInterface> {
+    console.log(request);
     const data = await this.userService.createUser(
       camelCaseKeys(CreateUserDto, request),
     );
-    const result: User = snakeCaseKeys(CreateUserDto, data) as unknown as User;
+    const result: User = snakeCaseKeys(
+      CreateUserResponseDto,
+      data,
+    ) as unknown as User;
     return this.userService.buildUserResponse(result);
   }
 }
