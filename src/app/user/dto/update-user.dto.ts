@@ -1,16 +1,27 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
-import { IsNotEmpty, IsOptional } from 'class-validator';
-import { LoginUserDto } from './login-user.dto';
+import { IsEmail, IsNotEmpty, IsOptional } from 'class-validator';
 
-export class CreateUserDto extends LoginUserDto {
+export class UpdateUserDto {
+
+  @ApiProperty({
+    type: String,
+    example: 'anhkhoaquachvo@gmail.com',
+    name: 'email',
+    required: false,
+  })
+  @IsOptional()
+  @IsEmail()
+  @Expose({ name: 'email' })
+  public email: string;
+
   @ApiProperty({
     type: String,
     example: 'adagio',
     name: 'username',
-    required: true,
+    required: false,
   })
-  @IsNotEmpty()
+  @IsOptional()
   @Expose({ name: 'username' })
   public username: string;
 

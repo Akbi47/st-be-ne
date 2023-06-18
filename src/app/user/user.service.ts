@@ -8,6 +8,7 @@ import { UserResponseInterface } from './types';
 import { ConfigService } from '@nestjs/config';
 import { compare } from 'bcrypt';
 import { ThrowException } from '@app/utils/common';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UserService {
@@ -16,7 +17,7 @@ export class UserService {
     private readonly userRepository: Repository<User>,
     private readonly config: ConfigService,
     private readonly throwException: ThrowException,
-  ) {}
+  ) { }
   async createUser(request?: CreateUserDto): Promise<CreateUserResponseDto> {
     try {
       const userByEmail = await this.userRepository.findOne({
@@ -38,13 +39,17 @@ export class UserService {
       Object.assign(newUser, request);
 
       const result: CreateUserResponseDto = new CreateUserResponseDto(newUser);
-      console.log(result);
-      return await this.userRepository.save(result);
+      return await this.userRepository.save(result.user);
     } catch (e) {
       return;
     }
   }
-  async loginUser(request?: LoginUserDto): Promise<CreateUserResponseDto> {
+  async updateUser(userId: string, request: UpdateUserDto): Promise<User> {
+    const user = await this.findById(userId);
+    Object.assign(user, request);
+    return await this.userRepository.save(user);
+  }
+  async loginUser(request?: LoginUserDto): Promise<User> {
     try {
       const user = await this.userRepository.findOne({
         where: { email: request.email },
@@ -70,9 +75,7 @@ export class UserService {
       }
 
       delete user.password;
-      const result: CreateUserResponseDto = new CreateUserResponseDto(user);
-
-      return result;
+      return user;
     } catch (e) {
       return;
     }
@@ -89,11 +92,25 @@ export class UserService {
   }
 
   buildUserResponse(user: User): UserResponseInterface {
-    return {
-      user: {
-        ...user,
-        token: this.generateJwt(user),
-      },
-    };
+    try {
+      return {
+        user: {
+          ...user,
+          token: this.generateJwt(user),
+        },
+      };
+    } catch (e) {
+      this.throwException.throwHttpException(
+        `${e}`,
+        HttpStatus.UNPROCESSABLE_ENTITY,
+      );
+      return;
+    }
+  }
+
+  async findById(id: string): Promise<User> {
+    return this.userRepository.findOne({
+      where: { id },
+    });
   }
 }

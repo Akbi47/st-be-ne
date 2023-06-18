@@ -5,7 +5,7 @@ import { IsEmail, IsNotEmpty } from 'class-validator';
 export class LoginUserDto {
   @ApiProperty({
     type: String,
-    example: 'user1@gmail.com',
+    example: 'anhkhoaquachvo@gmail.com',
     name: 'email',
     required: true,
   })
@@ -17,7 +17,7 @@ export class LoginUserDto {
 
   @ApiProperty({
     description: 'password of user',
-    example: 'cb4afaa0_fd5dk*49a9@b02085730da02094',
+    example: '472000',
     name: 'password',
     required: true,
   })

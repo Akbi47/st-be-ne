@@ -14,12 +14,12 @@ export class CreateUserResponseDto {
   })
   @IsArray()
   @ValidateNested()
-  public user: CreateUserDto;
+  public user?: CreateUserDto;
 
   @ApiProperty({
     example: 'zwqkrediasdjf09834#$%%jklas0jwe',
     type: String,
   })
   @Expose({ name: 'id' })
-  public id: string;
+  public id?: string;
 }

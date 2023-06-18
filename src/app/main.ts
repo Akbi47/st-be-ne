@@ -17,19 +17,27 @@ async function bootstrap() {
     apiDocPrefix,
     apiPrefix,
   } = appConfigService.AppOptions;
+
   // api prefix
   app.setGlobalPrefix(apiPrefix);
+
   app.enableVersioning({ type: VersioningType.URI });
+
   app.enableCors({
     origin: allowedOrigins,
     credentials: true,
   });
+
   app.useGlobalPipes(GlobalValidationPipe);
+
   if (enableApiDoc) {
     registerSwagger(app, { appName, appVer, apiPrefix: `/${apiDocPrefix}` });
   }
+
   app.enableShutdownHooks();
+
   await app.listen(port, host);
+  
   Logger.log(`Server started on http://${host}:${port}/api/v1`, 'Server');
   if (enableApiDoc) {
     Logger.log(
